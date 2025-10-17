@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
@@ -40,4 +41,31 @@ public interface RandevuRepository extends JpaRepository<Randevu, String>
             @Param("start") LocalTime start,
             @Param("end") LocalTime end
     );
+
+    @Query("""
+        SELECT DATE(r.olusturulmaTarihi) as tarih, 
+               SUM(h.fiyat) as toplamKar
+        FROM Randevu r
+        INNER JOIN r.hizmet h
+        WHERE r.deleted = false
+        AND r.olusturulmaTarihi BETWEEN :baslangicTarihi AND :bitisTarihi
+        GROUP BY DATE(r.olusturulmaTarihi)
+        ORDER BY DATE(r.olusturulmaTarihi) ASC
+        """)
+    List<Object[]> getGunlukKarIstatistikleri(
+            @Param("baslangicTarihi") LocalDateTime baslangicTarihi,
+            @Param("bitisTarihi") LocalDateTime bitisTarihi
+    );
+
+    @Query("""
+            SELECT DATE(r.olusturulmaTarihi) as tarih, 
+                   SUM(h.fiyat) as toplamKar
+            FROM Randevu r
+            INNER JOIN r.hizmet h
+            WHERE r.deleted = false
+            AND r.olusturulmaTarihi >= :baslangicTarihi
+            GROUP BY DATE(r.olusturulmaTarihi)
+            ORDER BY DATE(r.olusturulmaTarihi) ASC
+            """)
+    List<Object[]> getSonNGunKarIstatistikleri(@Param("baslangicTarihi") LocalDateTime baslangicTarihi);
 }
