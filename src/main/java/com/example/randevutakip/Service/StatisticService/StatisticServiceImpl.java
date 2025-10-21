@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,7 +18,7 @@ public class StatisticServiceImpl implements StatisticService
     @Override
     public List<GunlukKarDTO> getGunlukKarlar(int sonKacGun)
     {
-        LocalDateTime baslangic = LocalDateTime.now().minusDays(sonKacGun).withHour(0).withMinute(0);
+        LocalDate baslangic = LocalDate.now().minusDays(sonKacGun);
 
         List<Object[]> sonuclar = randevuRepository.getSonNGunKarIstatistikleri(baslangic);
 
@@ -34,10 +33,7 @@ public class StatisticServiceImpl implements StatisticService
     @Override
     public List<GunlukKarDTO> getGunlukKarlar(LocalDate baslangic, LocalDate bitis)
     {
-        LocalDateTime baslangicTarihi = baslangic.atStartOfDay();
-        LocalDateTime bitisTarihi = bitis.atTime(23, 59, 59);
-
-        List<Object[]> sonuclar = randevuRepository.getGunlukKarIstatistikleri(baslangicTarihi, bitisTarihi);
+        List<Object[]> sonuclar = randevuRepository.getGunlukKarIstatistikleri(baslangic, bitis);
 
         return sonuclar.stream()
                 .map(row -> new GunlukKarDTO(

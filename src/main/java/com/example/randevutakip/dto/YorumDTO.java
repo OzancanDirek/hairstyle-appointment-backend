@@ -2,18 +2,14 @@ package com.example.randevutakip.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import java.util.UUID;
 
 @Getter
 @Setter
-public class CalisanDto
+public class YorumDTO
 {
-    private String id = UUID.randomUUID().toString();
-
     private String ad;
-
     private String soyad;
-
     private String telefon;
-
+    private Integer yildiz;
+    private String yorumMetni;
 }
