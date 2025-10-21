@@ -13,7 +13,6 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
-
 @Repository
 public interface RandevuRepository extends JpaRepository<Randevu, String>
 {
@@ -23,7 +22,6 @@ public interface RandevuRepository extends JpaRepository<Randevu, String>
             "LEFT JOIN FETCH r.calisan " +
             "LEFT JOIN FETCH r.hizmet")
     List<Randevudto> getAllRandevular();
-
 
     @Query("SELECT r FROM Randevu r WHERE r.calisan.id = :calisanId AND r.tarih = :tarih AND r.saat = :saat")
     Optional<Randevu> findExistingRandevu(String calisanId, LocalDate tarih, LocalTime saat);
@@ -43,29 +41,31 @@ public interface RandevuRepository extends JpaRepository<Randevu, String>
     );
 
     @Query("""
-        SELECT DATE(r.olusturulmaTarihi) as tarih, 
+        SELECT DATE(r.tarih) as tarih, 
                SUM(h.fiyat) as toplamKar
         FROM Randevu r
         INNER JOIN r.hizmet h
         WHERE r.deleted = false
-        AND r.olusturulmaTarihi BETWEEN :baslangicTarihi AND :bitisTarihi
-        GROUP BY DATE(r.olusturulmaTarihi)
-        ORDER BY DATE(r.olusturulmaTarihi) ASC
+        AND r.durum = 'TAMAMLANDI'
+        AND r.tarih BETWEEN :baslangicTarihi AND :bitisTarihi
+        GROUP BY DATE(r.tarih)
+        ORDER BY DATE(r.tarih) ASC
         """)
     List<Object[]> getGunlukKarIstatistikleri(
-            @Param("baslangicTarihi") LocalDateTime baslangicTarihi,
-            @Param("bitisTarihi") LocalDateTime bitisTarihi
+            @Param("baslangicTarihi") LocalDate baslangicTarihi,
+            @Param("bitisTarihi") LocalDate bitisTarihi
     );
 
     @Query("""
-            SELECT DATE(r.olusturulmaTarihi) as tarih, 
+            SELECT DATE(r.tarih) as tarih, 
                    SUM(h.fiyat) as toplamKar
             FROM Randevu r
             INNER JOIN r.hizmet h
             WHERE r.deleted = false
-            AND r.olusturulmaTarihi >= :baslangicTarihi
-            GROUP BY DATE(r.olusturulmaTarihi)
-            ORDER BY DATE(r.olusturulmaTarihi) ASC
+            AND r.durum = 'TAMAMLANDI'
+            AND r.tarih >= :baslangicTarihi
+            GROUP BY DATE(r.tarih)
+            ORDER BY DATE(r.tarih) ASC
             """)
-    List<Object[]> getSonNGunKarIstatistikleri(@Param("baslangicTarihi") LocalDateTime baslangicTarihi);
+    List<Object[]> getSonNGunKarIstatistikleri(@Param("baslangicTarihi") LocalDate baslangicTarihi);
 }

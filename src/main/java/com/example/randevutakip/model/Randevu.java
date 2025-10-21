@@ -54,5 +54,9 @@ public class Randevu
     @Column(name = "reminder_sent")
     private boolean reminderSent = false;
 
+    @Column(name = "firebase_uid")
+    private String firebaseUid;
 
+    @Column(name = "yorum_yapildi")
+    private boolean yorumYapildi = false;
 }
