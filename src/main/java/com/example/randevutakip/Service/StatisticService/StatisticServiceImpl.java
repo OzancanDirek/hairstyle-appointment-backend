@@ -18,7 +18,8 @@ public class StatisticServiceImpl implements StatisticService
     @Override
     public List<GunlukKarDTO> getGunlukKarlar(int sonKacGun)
     {
-        LocalDate baslangic = LocalDate.now().minusDays(sonKacGun);
+        // ✅ DÜZELTME: sonKacGun - 1
+        LocalDate baslangic = LocalDate.now().minusDays(sonKacGun - 1);
 
         List<Object[]> sonuclar = randevuRepository.getSonNGunKarIstatistikleri(baslangic);
 
