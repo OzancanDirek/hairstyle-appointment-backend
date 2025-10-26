@@ -5,6 +5,7 @@ import com.example.randevutakip.Service.RandevuService.RandevuService;
 import com.example.randevutakip.dto.Randevudto;
 import com.example.randevutakip.model.Randevu;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/randevu")
+@CrossOrigin(origins = {"http://localhost:3000", "https://hairstyle-appointment-web-production.up.railway.app"})
 public class RandevuController
 {
     private final RandevuService randevuService;

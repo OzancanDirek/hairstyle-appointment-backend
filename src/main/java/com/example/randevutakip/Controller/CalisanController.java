@@ -5,6 +5,7 @@ import com.example.randevutakip.Service.CalisanService.CalisanService;
 import com.example.randevutakip.dto.CalisanDto;
 import com.example.randevutakip.model.Calisan;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/calisan")
+@CrossOrigin(origins = {"http://localhost:3000", "https://hairstyle-appointment-web-production.up.railway.app"})
 public class CalisanController
 {
     private final CalisanService calisanService;
