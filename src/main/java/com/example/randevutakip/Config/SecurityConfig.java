@@ -37,7 +37,9 @@ public class SecurityConfig {
                                 "/api/calisanlar/**",
                                 "/api/yorum/**",
                                 "/api/yorumlar/**",
-                                "/api/istatistik/**"
+                                "/api/istatistik/**",
+                                "/api/getAllRandevuList"
+
                         ).permitAll()
                         .requestMatchers("/api/admin/**").hasAnyRole("ADMIN", "CALISAN")
                         .anyRequest().authenticated()
