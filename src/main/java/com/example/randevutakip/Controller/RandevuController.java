@@ -4,6 +4,7 @@ import com.example.randevutakip.Repository.RandevuRepository;
 import com.example.randevutakip.Service.RandevuService.RandevuService;
 import com.example.randevutakip.dto.Randevudto;
 import com.example.randevutakip.model.Randevu;
+import com.example.randevutakip.model.RandevuDurumu;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/randevu")
@@ -66,5 +68,21 @@ public class RandevuController
     @GetMapping("/aktif") //deletedı = 0 olan aktif durumdaki randevuları listeler çalışan için.
     public ResponseEntity<List<Randevudto>> getAktifRandevular() {
         return ResponseEntity.ok(randevuService.getRandevuAktif());
+    }
+
+    @PutMapping("/{id}/tamamla")
+    public ResponseEntity<?> randevuTamamla(@PathVariable String id) {
+        try {
+            Optional<Randevu> randevuOpt = randevuRepository.findById(id);
+            if (randevuOpt.isPresent()) {
+                Randevu randevu = randevuOpt.get();
+                randevu.setDurum(RandevuDurumu.TAMAMLANDI);
+                randevuRepository.save(randevu);
+                return ResponseEntity.ok("Randevu tamamlandı!");
+            }
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }
