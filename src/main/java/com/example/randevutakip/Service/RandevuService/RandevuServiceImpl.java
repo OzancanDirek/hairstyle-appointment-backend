@@ -29,9 +29,8 @@ public class RandevuServiceImpl implements RandevuService
     }
 
     @Override
-    public List<Randevudto> getAllRandevular()
-    {
-        return randevuRepository.getAllRandevular();
+    public List<Randevudto> getAllRandevular() {
+        return randevuRepository.findAllAsDto();
     }
 
     @Override
@@ -174,6 +173,4 @@ public class RandevuServiceImpl implements RandevuService
                 })
                 .collect(Collectors.toList());
     }
-
-
 }

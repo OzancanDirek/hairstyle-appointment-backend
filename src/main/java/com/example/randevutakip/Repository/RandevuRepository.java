@@ -68,4 +68,12 @@ public interface RandevuRepository extends JpaRepository<Randevu, String>
             ORDER BY DATE(r.tarih) ASC
             """)
     List<Object[]> getSonNGunKarIstatistikleri(@Param("baslangicTarihi") LocalDate baslangicTarihi);
+
+    @Query("SELECT new com.example.randevutakip.dto.Randevudto(" +
+            "r.randevuId, r.ad, r.soyad, r.tarih, r.saat, r.durum, " +
+            "c.ad, c.soyad, h.ad) " +
+            "FROM Randevu r " +
+            "LEFT JOIN r.calisan c " +
+            "LEFT JOIN r.hizmet h")
+    List<Randevudto> findAllAsDto();
 }
