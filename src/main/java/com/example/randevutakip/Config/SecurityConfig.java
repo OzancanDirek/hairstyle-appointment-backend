@@ -26,23 +26,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/",
-                                "/api/auth/**",
-                                "/api/randevu/**",
-                                "/api/randevular/**",
-                                "/api/hizmet/**",
-                                "/api/hizmetler/**",
-                                "/api/calisan/**",
-                                "/api/calisanlar/**",
-                                "/api/yorum/**",
-                                "/api/yorumlar/**",
-                                "/api/istatistik/**",
-                                "/api/randevu/getAllRandevuList"
-
-                        ).permitAll()
-                        .requestMatchers("/api/admin/**").hasAnyRole("ADMIN", "CALISAN")
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()  // 👈 Tüm isteklere izin ver!
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
