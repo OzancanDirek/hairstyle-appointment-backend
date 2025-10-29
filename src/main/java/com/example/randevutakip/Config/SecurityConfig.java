@@ -38,7 +38,7 @@ public class SecurityConfig {
                                 "/api/yorum/**",
                                 "/api/yorumlar/**",
                                 "/api/istatistik/**",
-                                "/api/getAllRandevuList"
+                                "/api/randevu/getAllRandevuList"
 
                         ).permitAll()
                         .requestMatchers("/api/admin/**").hasAnyRole("ADMIN", "CALISAN")
