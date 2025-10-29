@@ -29,7 +29,8 @@ public class RandevuServiceImpl implements RandevuService
     }
 
     @Override
-    public List<Randevudto> getAllRandevular() {
+    public List<Randevudto> getAllRandevular()
+    {
         return randevuRepository.findAllAsDto();
     }
 
@@ -54,7 +55,8 @@ public class RandevuServiceImpl implements RandevuService
             throw new RuntimeException("Bu tarih ve saatte seçilen çalışanın zaten bir randevusu var!");
         }
 
-        if(randevu.getDurum() == null){
+        if (randevu.getDurum() == null)
+        {
             randevu.setDurum(RandevuDurumu.BEKLEMEDE);
         }
         return randevuRepository.save(randevu);
@@ -166,6 +168,34 @@ public class RandevuServiceImpl implements RandevuService
 
                     if (r.getHizmet() != null)
                     {
+                        dto.setHizmetAd(r.getHizmet().getAd());
+                    }
+
+                    dto.setDurum(r.getDurum() != null ? r.getDurum().name() : "BELİRTİLMEDİ");
+
+                    return dto;
+                })
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Randevudto> getRandevuBeklemede() {
+        return randevuRepository.findBeklemedekiRandevular()
+                .stream()
+                .map(r -> {
+                    Randevudto dto = new Randevudto();
+                    dto.setRandevuId(r.getRandevuId());
+                    dto.setAd(r.getAd());
+                    dto.setSoyad(r.getSoyad());
+                    dto.setTarih(r.getTarih() != null ? r.getTarih().toString() : "");
+                    dto.setSaat(r.getSaat() != null ? r.getSaat().toString() : "");
+
+                    if (r.getCalisan() != null) {
+                        dto.setCalisanAd(r.getCalisan().getAd());
+                        dto.setCalisanSoyad(r.getCalisan().getSoyad());
+                    }
+
+                    if (r.getHizmet() != null) {
                         dto.setHizmetAd(r.getHizmet().getAd());
                     }
 

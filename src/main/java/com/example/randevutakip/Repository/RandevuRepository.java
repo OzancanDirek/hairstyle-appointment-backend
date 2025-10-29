@@ -76,4 +76,7 @@ public interface RandevuRepository extends JpaRepository<Randevu, String>
             "LEFT JOIN r.calisan c " +
             "LEFT JOIN r.hizmet h")
     List<Randevudto> findAllAsDto();
+
+    @Query("SELECT r FROM Randevu r WHERE r.deleted = false AND r.durum = 'BEKLEMEDE'")
+    List<Randevu> findBeklemedekiRandevular();
 }

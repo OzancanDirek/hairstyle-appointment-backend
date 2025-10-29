@@ -18,5 +18,7 @@ public interface RandevuService
     List<Randevu> getRandevularByCalisanId(String calisanId);
 
     List<Randevudto> getRandevuAktif();
+
+    List<Randevudto> getRandevuBeklemede();
 }
 

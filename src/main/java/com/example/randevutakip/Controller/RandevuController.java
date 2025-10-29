@@ -70,19 +70,9 @@ public class RandevuController
         return ResponseEntity.ok(randevuService.getRandevuAktif());
     }
 
-    @PutMapping("/{id}/tamamla")
-    public ResponseEntity<?> randevuTamamla(@PathVariable String id) {
-        try {
-            Optional<Randevu> randevuOpt = randevuRepository.findById(id);
-            if (randevuOpt.isPresent()) {
-                Randevu randevu = randevuOpt.get();
-                randevu.setDurum(RandevuDurumu.TAMAMLANDI);
-                randevuRepository.save(randevu);
-                return ResponseEntity.ok("Randevu tamamlandı!");
-            }
-            return ResponseEntity.notFound().build();
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    @GetMapping("/getBeklemede")
+    public List<Randevudto> getBeklemedeRandevu()
+    {
+        return randevuService.getRandevuBeklemede();
     }
 }
