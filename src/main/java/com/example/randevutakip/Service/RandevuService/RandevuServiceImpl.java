@@ -54,7 +54,9 @@ public class RandevuServiceImpl implements RandevuService
             throw new RuntimeException("Bu tarih ve saatte seçilen çalışanın zaten bir randevusu var!");
         }
 
-        randevu.setDurum(RandevuDurumu.BEKLEMEDE);
+        if(randevu.getDurum() == null){
+            randevu.setDurum(RandevuDurumu.BEKLEMEDE);
+        }
         return randevuRepository.save(randevu);
     }
 
