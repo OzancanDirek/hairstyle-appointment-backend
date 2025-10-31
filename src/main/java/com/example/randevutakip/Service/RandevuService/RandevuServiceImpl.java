@@ -220,9 +220,9 @@ public class RandevuServiceImpl implements RandevuService
     }
 
     @Override
-    public List<Randevu> getBugunkuRandevuSayisi()
+    public Long getBugunkuRandevuSayisi()
     {
-        return randevuRepository.findAllByDurum();
+        return randevuRepository.countTamamlananRandevular();
     }
 
 }
