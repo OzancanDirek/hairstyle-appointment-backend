@@ -10,7 +10,10 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -219,14 +222,15 @@ public class RandevuServiceImpl implements RandevuService
                 .collect(Collectors.toList());
     }
 
+
     @Override
     public List<Randevu> getBugunkuRandevuSayisi() {
         LocalDate today = LocalDate.now();
-        return randevuRepository.findAll()
-                .stream()
+
+        return randevuRepository.findAll().stream()
                 .filter(r -> !r.isDeleted())
-                .filter(r -> "TAMAMLANDI".equals(r.getDurum()))
-                .filter(r -> r.getTarih().equals(LocalDate.now()))
+                .filter(r -> r.getDurum().equals(RandevuDurumu.TAMAMLANDI.name()))
+                .filter(r -> r.getTarih().equals(today))
                 .collect(Collectors.toList());
     }
 }

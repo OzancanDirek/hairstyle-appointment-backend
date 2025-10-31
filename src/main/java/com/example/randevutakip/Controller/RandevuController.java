@@ -4,6 +4,7 @@ import com.example.randevutakip.Repository.RandevuRepository;
 import com.example.randevutakip.Service.RandevuService.RandevuService;
 import com.example.randevutakip.dto.Randevudto;
 import com.example.randevutakip.model.Randevu;
+import com.example.randevutakip.model.RandevuDurumu;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 @RestController
@@ -85,9 +88,38 @@ public class RandevuController
     }
 
     @GetMapping("/bugunki-sayisi")
-    public ResponseEntity<Integer> getBugunkuRandevuSayisi()
+    public int bugunTamamlananRandevuSayisi()
     {
-        List<Randevu> randevular = randevuService.getBugunkuRandevuSayisi();
-        return ResponseEntity.ok(randevular.size());
+        // Tarihi UTC olarak al ve sonra Istanbul’a çevir
+        ZonedDateTime nowZoned = ZonedDateTime.now(ZoneId.of("Europe/Istanbul"));
+        LocalDate bugun = nowZoned.toLocalDate();
+
+        System.out.println("📅 Sistem saati (Europe/Istanbul): " + nowZoned);
+        System.out.println("📅 Bugünün tarihi (LocalDate): " + bugun);
+
+        List<Randevu> randevular = randevuRepository.findAll();
+        System.out.println("📊 Veritabanından çekilen toplam randevu: " + randevular.size());
+
+        long sayi = randevular.stream()
+                .filter(r -> {
+                    LocalDate randevuTarihi = r.getTarih(); // Zaten LocalDate
+
+                    boolean tarihEslesme = bugun.equals(randevuTarihi);
+                    boolean durumTamamlandi = r.getDurum() == RandevuDurumu.TAMAMLANDI;
+                    boolean silinmemis = !r.isDeleted();
+
+                    System.out.println("🔍 RandevuID: " + r.getRandevuId()
+                            + " | Tarih: " + randevuTarihi
+                            + " | Eşleşti mi? " + tarihEslesme
+                            + " | Durum: " + r.getDurum()
+                            + " | TAMAMLANDI mı? " + durumTamamlandi
+                            + " | Silinmemiş mi? " + silinmemis);
+
+                    return tarihEslesme && durumTamamlandi && silinmemis;
+                })
+                .count();
+
+        System.out.println("✅ Bugün TAMAMLANDI olan randevu sayısı: " + sayi);
+        return (int) sayi;
     }
 }
