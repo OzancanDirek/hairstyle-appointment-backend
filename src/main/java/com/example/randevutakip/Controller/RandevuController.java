@@ -85,4 +85,10 @@ public class RandevuController
     {
         return ResponseEntity.ok(randevuService.getDoluSaatler(calisanId, tarih));
     }
+
+    @GetMapping("/bugunki-sayisi")
+    public ResponseEntity<Long> getBugunkuRandevuSayisi()
+    {
+        return ResponseEntity.ok(randevuService.getBugunkuRandevuSayisi());
+    }
 }

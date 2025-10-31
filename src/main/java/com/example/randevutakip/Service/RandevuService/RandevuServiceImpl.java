@@ -219,4 +219,10 @@ public class RandevuServiceImpl implements RandevuService
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public Long getBugunkuRandevuSayisi()
+    {
+        return randevuRepository.count();
+    }
+
 }

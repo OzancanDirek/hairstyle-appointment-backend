@@ -14,4 +14,6 @@ public interface CalisanService
     void deleteCalisan(String id);
 
     Calisan updateCalisan(String id,CalisanDto calisanBilgileri);
+
+    Long getAktifCalisanSayisi();
 }

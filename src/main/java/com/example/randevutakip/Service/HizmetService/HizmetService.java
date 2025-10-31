@@ -54,4 +54,10 @@ public class HizmetService implements HizmetServiceImpl
         }
         return hizmet;
     }
+
+    @Override
+    public Long getAktifHizmetSayisi()
+    {
+        return _hizmetRepository.count();
+    }
 }

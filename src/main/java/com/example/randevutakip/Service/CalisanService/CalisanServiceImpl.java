@@ -67,4 +67,10 @@ public class CalisanServiceImpl implements CalisanService
 
         return degisimVar ? calisanRepository.save(mevcut) : mevcut;
     }
+
+    @Override
+    public Long getAktifCalisanSayisi()
+    {
+        return calisanRepository.count();
+    }
 }

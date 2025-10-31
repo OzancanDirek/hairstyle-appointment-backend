@@ -10,4 +10,6 @@ public interface HizmetServiceImpl
     List<Hizmet> listAllHizmet();
 
     Hizmet updateHizmet(HizmetDTO hizmetBilgileri);
+
+    Long getAktifHizmetSayisi();
 }

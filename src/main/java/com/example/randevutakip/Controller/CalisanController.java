@@ -53,4 +53,10 @@ public class CalisanController
     {
         return calisanService.updateCalisan(id, calisanBilgileri);
     }
+
+    @GetMapping("/aktif-sayisi")
+    public ResponseEntity<Long> getAktifCalisanSayisi()
+    {
+        return ResponseEntity.ok(calisanService.getAktifCalisanSayisi());
+    }
 }
