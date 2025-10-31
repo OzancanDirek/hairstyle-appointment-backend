@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @RestController
@@ -88,38 +89,8 @@ public class RandevuController
     }
 
     @GetMapping("/bugunki-sayisi")
-    public int bugunTamamlananRandevuSayisi()
+    public List<Randevu> bugunTamamlananRandevuSayisi()
     {
-        // Tarihi UTC olarak al ve sonra Istanbul’a çevir
-        ZonedDateTime nowZoned = ZonedDateTime.now(ZoneId.of("Europe/Istanbul"));
-        LocalDate bugun = nowZoned.toLocalDate();
-
-        System.out.println("📅 Sistem saati (Europe/Istanbul): " + nowZoned);
-        System.out.println("📅 Bugünün tarihi (LocalDate): " + bugun);
-
-        List<Randevu> randevular = randevuRepository.findAll();
-        System.out.println("📊 Veritabanından çekilen toplam randevu: " + randevular.size());
-
-        long sayi = randevular.stream()
-                .filter(r -> {
-                    LocalDate randevuTarihi = r.getTarih(); // Zaten LocalDate
-
-                    boolean tarihEslesme = bugun.equals(randevuTarihi);
-                    boolean durumTamamlandi = r.getDurum() == RandevuDurumu.TAMAMLANDI;
-                    boolean silinmemis = !r.isDeleted();
-
-                    System.out.println("🔍 RandevuID: " + r.getRandevuId()
-                            + " | Tarih: " + randevuTarihi
-                            + " | Eşleşti mi? " + tarihEslesme
-                            + " | Durum: " + r.getDurum()
-                            + " | TAMAMLANDI mı? " + durumTamamlandi
-                            + " | Silinmemiş mi? " + silinmemis);
-
-                    return tarihEslesme && durumTamamlandi && silinmemis;
-                })
-                .count();
-
-        System.out.println("✅ Bugün TAMAMLANDI olan randevu sayısı: " + sayi);
-        return (int) sayi;
+        return randevuService.getBugunkuRandevuSayisi();
     }
 }
