@@ -43,7 +43,7 @@ public class SchedulerService
     }
 
     // Her gün gece 00:05'te çalışır - Geçmiş randevuları otomatik tamamlar
-    @Scheduled(cron = "0 13 19 * * *")
+    @Scheduled(cron = "0 05 21 * * *")
     public void otomatikTamamla()
     {
         LocalDate bugun = LocalDate.now();
