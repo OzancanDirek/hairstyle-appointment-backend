@@ -72,4 +72,8 @@ public class HizmetController
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    @GetMapping("/aktif-sayisi")
+    public Long getAktifHizmetSayisi() {
+        return hizmetService.getAktifHizmetSayisi();
+    }
 }

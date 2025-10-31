@@ -4,7 +4,6 @@ import com.example.randevutakip.Repository.RandevuRepository;
 import com.example.randevutakip.Service.RandevuService.RandevuService;
 import com.example.randevutakip.dto.Randevudto;
 import com.example.randevutakip.model.Randevu;
-import com.example.randevutakip.model.RandevuDurumu;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/randevu")
