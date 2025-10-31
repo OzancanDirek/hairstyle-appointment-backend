@@ -20,5 +20,7 @@ public interface RandevuService
     List<Randevudto> getRandevuAktif();
 
     List<Randevudto> getRandevuBeklemede();
+    List<String> getDoluSaatler(String calisanId, String tarih);
+
 }
 

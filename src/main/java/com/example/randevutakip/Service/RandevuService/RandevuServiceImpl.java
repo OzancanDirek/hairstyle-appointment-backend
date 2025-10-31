@@ -208,4 +208,15 @@ public class RandevuServiceImpl implements RandevuService
                 })
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<String> getDoluSaatler(String calisanId, String tarih)
+    {
+        LocalDate randevuTarihi = LocalDate.parse(tarih);
+        List<Randevu> mevcutRandevular = randevuRepository.findAllByCalisan_IdAndTarihAndDeletedFalse(calisanId, randevuTarihi);
+        return mevcutRandevular.stream()
+                .map(r -> r.getSaat().toString())
+                .collect(Collectors.toList());
+    }
+
 }

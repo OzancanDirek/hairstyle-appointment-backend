@@ -79,4 +79,6 @@ public interface RandevuRepository extends JpaRepository<Randevu, String>
 
     @Query("SELECT r FROM Randevu r WHERE r.deleted = false AND r.durum = 'BEKLEMEDE'")
     List<Randevu> findBeklemedekiRandevular();
+
+    List<Randevu> findAllByCalisan_IdAndTarihAndDeletedFalse(String calisanId, LocalDate tarih);
 }

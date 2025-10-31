@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -66,7 +67,8 @@ public class RandevuController
     }
 
     @GetMapping("/aktif") //deletedı = 0 olan aktif durumdaki randevuları listeler çalışan için.
-    public ResponseEntity<List<Randevudto>> getAktifRandevular() {
+    public ResponseEntity<List<Randevudto>> getAktifRandevular()
+    {
         return ResponseEntity.ok(randevuService.getRandevuAktif());
     }
 
@@ -74,5 +76,13 @@ public class RandevuController
     public List<Randevudto> getBeklemedeRandevu()
     {
         return randevuService.getRandevuBeklemede();
+    }
+
+    @GetMapping("dolu-saatler")
+    public ResponseEntity<List<String>> getDoluSaatler(
+            @RequestParam String calisanId,
+            @RequestParam String tarih)
+    {
+        return ResponseEntity.ok(randevuService.getDoluSaatler(calisanId, tarih));
     }
 }
