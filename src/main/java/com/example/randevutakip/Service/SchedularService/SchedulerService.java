@@ -43,7 +43,7 @@ public class SchedulerService
     }
 
     // Her gün gece 00:05'te çalışır - Geçmiş randevuları otomatik tamamlar
-    @Scheduled(cron = "0 7 22 * * *")
+    @Scheduled(cron = "0 13 19 * * *")
     public void otomatikTamamla()
     {
         LocalDate bugun = LocalDate.now();
@@ -61,7 +61,6 @@ public class SchedulerService
             r.setDurum(RandevuDurumu.TAMAMLANDI);
             randevuRepository.save(r);
         }
-
         System.out.println("Otomatik tamamlama: " + gecmisRandevular.size() + " randevu tamamlandı.");
     }
 }
