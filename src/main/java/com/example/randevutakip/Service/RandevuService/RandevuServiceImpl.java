@@ -221,7 +221,12 @@ public class RandevuServiceImpl implements RandevuService
 
     @Override
     public List<Randevu> getBugunkuRandevuSayisi() {
-        LocalDate bugun = LocalDate.now();
-        return randevuRepository.findBugunkuRandevular(bugun);
+        LocalDate today = LocalDate.now();
+        return randevuRepository.findAll()
+                .stream()
+                .filter(r -> !r.isDeleted())
+                .filter(r -> "TAMAMLANDI".equals(r.getDurum()))
+                .filter(r -> r.getTarih().equals(LocalDate.now()))
+                .collect(Collectors.toList());
     }
 }
