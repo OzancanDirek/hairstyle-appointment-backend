@@ -85,7 +85,7 @@ public class RandevuController
     }
 
     @GetMapping("/bugunki-sayisi")
-    public ResponseEntity<Long> getBugunkuRandevuSayisi()
+    public ResponseEntity<List<Randevu>> getBugunkuRandevuSayisi()
     {
         return ResponseEntity.ok(randevuService.getBugunkuRandevuSayisi());
     }
