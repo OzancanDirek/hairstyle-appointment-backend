@@ -23,6 +23,6 @@ public interface RandevuService
 
     List<String> getDoluSaatler(String calisanId, String tarih);
 
-    Long getBugunkuRandevuSayisi();
+    List<Randevu> getBugunkuRandevuSayisi();
 }
 

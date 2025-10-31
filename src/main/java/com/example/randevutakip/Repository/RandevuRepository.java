@@ -82,6 +82,6 @@ public interface RandevuRepository extends JpaRepository<Randevu, String>
 
     List<Randevu> findAllByCalisan_IdAndTarihAndDeletedFalse(String calisanId, LocalDate tarih);
 
-    @Query("SELECT r FROM Randevu r WHERE r.durum = 'TAMAMLANDI' and r.deleted = false ")
-    Long countTamamlananRandevular();
+    @Query("SELECT r FROM Randevu r WHERE r.durum = 'TAMAMLANDI' AND r.deleted = false AND r.tarih = :bugun")
+    List<Randevu> findBugunkuRandevular(@Param("bugun") LocalDate bugun);
 }

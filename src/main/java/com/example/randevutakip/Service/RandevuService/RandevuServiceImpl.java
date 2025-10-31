@@ -220,9 +220,8 @@ public class RandevuServiceImpl implements RandevuService
     }
 
     @Override
-    public Long getBugunkuRandevuSayisi()
-    {
-        return randevuRepository.countTamamlananRandevular();
+    public List<Randevu> getBugunkuRandevuSayisi() {
+        LocalDate bugun = LocalDate.now();
+        return randevuRepository.findBugunkuRandevular(bugun);
     }
-
 }
