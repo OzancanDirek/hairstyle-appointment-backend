@@ -179,7 +179,8 @@ public class RandevuServiceImpl implements RandevuService
     }
 
     @Override
-    public List<Randevudto> getRandevuBeklemede() {
+    public List<Randevudto> getRandevuBeklemede()
+    {
         return randevuRepository.findBeklemedekiRandevular()
                 .stream()
                 .map(r -> {
@@ -190,12 +191,14 @@ public class RandevuServiceImpl implements RandevuService
                     dto.setTarih(r.getTarih() != null ? r.getTarih().toString() : "");
                     dto.setSaat(r.getSaat() != null ? r.getSaat().toString() : "");
 
-                    if (r.getCalisan() != null) {
+                    if (r.getCalisan() != null)
+                    {
                         dto.setCalisanAd(r.getCalisan().getAd());
                         dto.setCalisanSoyad(r.getCalisan().getSoyad());
                     }
 
-                    if (r.getHizmet() != null) {
+                    if (r.getHizmet() != null)
+                    {
                         dto.setHizmetAd(r.getHizmet().getAd());
                     }
 

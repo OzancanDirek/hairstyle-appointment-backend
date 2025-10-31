@@ -40,7 +40,7 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList(
                 "http://localhost:3000",
-                "https://hairstyle-appointment-web-production.up.railway.app",
+                "https://hairstyle-appointment-frontend.vercel.app",
                 "https://efecankarapapakberber.net.tr"
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
