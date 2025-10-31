@@ -215,7 +215,7 @@ public class RandevuServiceImpl implements RandevuService
         LocalDate randevuTarihi = LocalDate.parse(tarih);
         List<Randevu> mevcutRandevular = randevuRepository.findAllByCalisan_IdAndTarihAndDeletedFalse(calisanId, randevuTarihi);
         return mevcutRandevular.stream()
-                .map(r -> r.getSaat().toString())
+                .map(r -> r.getSaat().toString().substring(0, 5))
                 .collect(Collectors.toList());
     }
 
