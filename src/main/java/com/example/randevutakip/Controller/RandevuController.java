@@ -84,7 +84,7 @@ public class RandevuController
         return ResponseEntity.ok(randevuService.getDoluSaatler(calisanId, tarih));
     }
 
-    @GetMapping("/bugunku-sayisi")
+    @GetMapping("/bugunki-sayisi")
     public ResponseEntity<Integer> getBugunkuRandevuSayisi()
     {
         List<Randevu> bugunku = randevuService.getBugunkuRandevuSayisi();
