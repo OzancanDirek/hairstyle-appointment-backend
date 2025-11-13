@@ -1,0 +1,8 @@
+[phases.setup]
+nixPkgs = ["openjdk21"]
+
+[phases.build]
+cmds = ["chmod +x mvnw", "./mvnw clean package -DskipTests -Dmaven.compiler.fork=false"]
+
+[start]
+cmd = "java -Xmx450m -jar target/*.jar"
